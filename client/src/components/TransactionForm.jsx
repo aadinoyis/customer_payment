@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 const TransactionForm = () => {
-  const [email, setEmail] = useState('hey.gobskt@gmail.com');
-  const [amount, setAmount] = useState('1000000');
-  const [currency, setCurrency] = useState('NGN');
+  const [email, setEmail] = useState('');
+  const [amount, setAmount] = useState('');
+  const [currency, setCurrency] = useState('');
   const [result, setResult] = useState(null);
 
   const handleSubmit = async (e) => {

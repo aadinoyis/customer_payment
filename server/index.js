@@ -13,7 +13,7 @@ const PORT = 8080
 app.use(express.json())
 app.use(cors())
 
-
+// create a new customer
 const createCustomer = async (params) => {
   const url = 'https://api.paystack.co/customer';
 
@@ -39,6 +39,7 @@ const createCustomer = async (params) => {
   }
 };
 
+// create a new payment
 const initializeTransaction = async ( params ) => {
   const url = 'https://api.paystack.co/transaction/initialize';
 
@@ -65,6 +66,7 @@ const initializeTransaction = async ( params ) => {
     }
 };
 
+// get the customer using customer email
 const getCustomerByEmailOrCode = async (emailOrCode) => {
 
   const url = `https://api.paystack.co/customer/${emailOrCode}`;
@@ -89,6 +91,7 @@ const getCustomerByEmailOrCode = async (emailOrCode) => {
   }
 };
 
+// get transactions using customer id
 const getTransactions = async (customerId) => {
   const url = `https://api.paystack.co/transaction?customer=${customerId}`;
 
@@ -115,7 +118,7 @@ const getTransactions = async (customerId) => {
 
 
 // const params = {
-//   "email": "dev@gobskt.com",
+//   "email": "email@gmail.com",
 //   "first_name": "Abdulwahab",
 //   "last_name": "Salihu",
 //   "phone": "+2348104723945",
@@ -133,15 +136,17 @@ app.post('/api/createCustomer', async (req, res) => {
 })
 
 // const params = {
-//   "email": "hey.gobskt@gmail.com",
+//   "email": "email@gmail.com",
 // }
 app.post('/api/getCustomerTransaction', async (req, res) => {
   const {email} = req.body;
 
   try {
     const customerId = await getCustomerByEmailOrCode(email)
+    // get the customer Id from the email provided
 
     const transaction = await getTransactions(customerId)
+    // get the customer transactions using the Id
 
     res.json(transaction)
   } catch (error) {
@@ -151,7 +156,7 @@ app.post('/api/getCustomerTransaction', async (req, res) => {
 
 
 // const params = {
-//   "email": "hey.gobskt@gmail.com",
+//   "email": "email@gmail.com",
 //   "amount": "1000000",
 //   "currency": "NGN",
 // };
@@ -170,7 +175,4 @@ app.post('/api/initiateTransaction', async (req, res) => {
 
 
 app.listen(PORT, () => console.log('server running on port: ' + PORT))
-
-
-
 
