@@ -3,13 +3,12 @@ import React, { useState } from 'react';
 const TransactionForm = () => {
   const [email, setEmail] = useState('');
   const [amount, setAmount] = useState('');
-  const [currency, setCurrency] = useState('');
   const [result, setResult] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const requestBody = { email, amount, currency };
+    const requestBody = { email, amount: parseInt(amount) * 100, currency: 'NGN' };
     try {
       const response = await fetch('https://customer-service-96ao.onrender.com/api/initiateTransaction', {
         method: 'POST',
@@ -52,17 +51,7 @@ const TransactionForm = () => {
             required
           />
         </label>
-        <br />
-        <label>
-          Currency:
-          <input
-            type="text"
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
-            required
-          />
-        </label>
-        <br />
+
         <button type="submit">Submit</button>
       </form>
 
