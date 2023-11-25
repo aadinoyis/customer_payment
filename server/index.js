@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import axios from 'axios'
 
 
 dotenv.config()
@@ -18,22 +19,15 @@ const createCustomer = async (params) => {
   const url = 'https://api.paystack.co/customer';
 
   try {
-    const response = await fetch(url, {
-      method: 'POST',
+    const response = await axios.post(url, params, {
       headers: {
         Authorization: `Bearer ${process.env.TEST_SECRET_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(params),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log(data);
-    return data
+    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.error(error);
   }
