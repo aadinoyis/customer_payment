@@ -172,6 +172,9 @@ app.post('/api/initiateTransaction', async (req, res) => {
   }
 })
 
+app.get('/api/hello', async (req, res) => {
+  res.json('hello')
+})
 
 
 app.listen(PORT, () => console.log('server running on port: ' + PORT))
