@@ -34,30 +34,27 @@ const createCustomer = async (params) => {
 };
 
 // create a new payment
-const initializeTransaction = async ( params ) => {
+const initializeTransaction = async (params) => {
   const url = 'https://api.paystack.co/transaction/initialize';
 
   try {
-    const response = await fetch(url, {
-      method: 'POST',
+    const response = await axios.post(url, params, {
       headers: {
         Authorization: `Bearer ${process.env.TEST_SECRET_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(params),
     });
 
-    if (!response.ok) {
+    if (response.status !== 200) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const {data} = await response.json();
+    const { data } = response;
     console.log(data);
-    return data.authorization_url
-
-    } catch (error) {
-      console.error(error);
-    }
+    return data.data.authorization_url;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // get the customer using customer email
@@ -66,20 +63,19 @@ const getCustomerByEmailOrCode = async (emailOrCode) => {
   const url = `https://api.paystack.co/customer/${emailOrCode}`;
 
   try {
-    const response = await fetch(url, {
-      method: 'GET',
+    const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${process.env.TEST_SECRET_KEY}`,
       },
     });
 
-    if (!response.ok) {
+    if (response.status !== 200) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const {data} = await response.json();
+    const { data } = response;
     console.log(data.id);
-    return data.id
+    return data.id;
   } catch (error) {
     console.error(error);
   }
@@ -90,20 +86,19 @@ const getTransactions = async (customerId) => {
   const url = `https://api.paystack.co/transaction?customer=${customerId}`;
 
   try {
-    const response = await fetch(url, {
-      method: 'GET',
+    const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${process.env.TEST_SECRET_KEY}`,
       },
     });
 
-    if (!response.ok) {
+    if (response.status !== 200) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const data = await response.json();
+    const data = response.data;
     console.log(data);
-    return data
+    return data;
   } catch (error) {
     console.error(error);
   }
