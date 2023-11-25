@@ -73,9 +73,9 @@ const getCustomerByEmailOrCode = async (emailOrCode) => {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const { data } = response;
-    console.log(data.id);
-    return data.id;
+    const {data} = response;
+    console.log(data.data.id);
+    return data.data.id;
   } catch (error) {
     console.error(error);
   }

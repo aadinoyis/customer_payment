@@ -11,7 +11,7 @@ const TransactionForm = () => {
 
     const requestBody = { email, amount, currency };
     try {
-      const response = await fetch('https://paystackgateway.onrender.com/api/initiateTransaction', {
+      const response = await fetch('https://customer-service-96ao.onrender.com/api/initiateTransaction', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
